@@ -5,8 +5,6 @@ import atmsimulator.services.impl.WithdrawServicesImpl;
 
 import java.util.Scanner;
 
-import static atmsimulator.MainApp.users;
-
 public class OtherWithdrawScreen implements BaseScreen {
 
     public void show() {

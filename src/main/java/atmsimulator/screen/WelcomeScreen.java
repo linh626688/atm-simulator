@@ -22,15 +22,12 @@ public class WelcomeScreen implements BaseScreen {
         System.out.println("---------------");
 
         System.out.print("Enter Account Number: ");
-        String accountNumber = scan.nextLine();
-        String acc = accountNumber;
-        accNumberStatic = acc;
+        accNumberStatic = scan.nextLine();
 
         userServices.validateAccountNumber(accNumberStatic, welcomeScreen);
 
         System.out.print("Enter PIN: ");
-        String pin = scan.nextLine();
-        pinStatic = pin;
+        pinStatic = scan.nextLine();
 
         userServices.validatePinNumber(pinStatic, welcomeScreen);
 

@@ -6,8 +6,6 @@ import atmsimulator.services.impl.WithdrawServicesImpl;
 
 import java.util.Scanner;
 
-import static atmsimulator.MainApp.users;
-
 public class WithdrawScreen implements BaseScreen{
     public static String withdrawAmount;
 
