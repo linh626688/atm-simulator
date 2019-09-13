@@ -7,6 +7,9 @@
     <groupId>com.bootcamp</groupId>
     <artifactId>case-study-1</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
     <build>
         <plugins>
             <plugin>
@@ -18,7 +21,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>testng</finalName>
+        <finalName>case-study-1</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
