@@ -20,6 +20,7 @@ public class FundTransferScreen implements BaseScreen {
         inputDestinationAccount();
 
     }
+
     public void inputDestinationAccount() {
         System.out.print("Please enter destination account: ");
         Scanner scan = new Scanner(System.in);
@@ -75,11 +76,11 @@ public class FundTransferScreen implements BaseScreen {
             System.out.println("Invalid Reference Number");
             inputReferenceNumber();
         } else {
-            transferConfirm(fundTransferScreen);
+            transferConfirm();
         }
     }
 
-    public void transferConfirm(BaseScreen fundTransferScreen) {
+    public void transferConfirm() {
 
         System.out.println("Transfer Confirmation");
         System.out.println("Destination Account: " + FundTransferScreen.destinationAcc);

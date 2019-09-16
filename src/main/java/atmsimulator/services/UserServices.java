@@ -1,7 +1,6 @@
 package atmsimulator.services;
 
 import atmsimulator.model.Account;
-import atmsimulator.screen.BaseScreen;
 
 
 public interface UserServices {

@@ -14,7 +14,7 @@ public class UserServicesImpl implements UserServices {
     public boolean validate(String accountNumber, String pin) {
         boolean isValid = false;
         Account user = verifyUser(accountNumber, pin);
-        if(user != null) {
+        if (user != null) {
             WelcomeScreen.balance = user.getBalance();
             isValid = true;
         }
@@ -53,7 +53,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public Account verifyUser(String accountNumber, String pin) {
         return users.stream()
-                .filter(user -> accountNumber.equals(user.getAccountNumber()) && pin.equals(user.getPIN()) )
+                .filter(user -> accountNumber.equals(user.getAccountNumber()) && pin.equals(user.getPIN()))
                 .findAny()
                 .orElse(null);
     }
