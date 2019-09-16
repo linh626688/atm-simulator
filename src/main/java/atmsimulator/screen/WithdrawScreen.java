@@ -7,6 +7,7 @@ import atmsimulator.services.impl.WithdrawServicesImpl;
 import java.util.Scanner;
 
 import static atmsimulator.Constant.*;
+import static atmsimulator.MainApp.*;
 
 public class WithdrawScreen implements BaseScreen {
     public static String withdrawAmount;
@@ -21,9 +22,6 @@ public class WithdrawScreen implements BaseScreen {
 
         Scanner scan = new Scanner(System.in);
         int opt = scan.nextInt();
-        SummaryScreen summaryScreen = new SummaryScreen();
-        TransactionScreen transactionScreen = new TransactionScreen();
-        OtherWithdrawScreen otherWithdrawScreen = new OtherWithdrawScreen();
         WithdrawServices withdrawServices = new WithdrawServicesImpl();
         String screenShow = null;
         switch (opt) {

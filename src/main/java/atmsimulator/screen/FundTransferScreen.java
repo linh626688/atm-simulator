@@ -2,20 +2,16 @@ package atmsimulator.screen;
 
 
 import atmsimulator.model.Account;
-import atmsimulator.services.FundTransferServices;
-import atmsimulator.services.impl.FundTransferServicesImpl;
 
 import java.util.Scanner;
 
 import static atmsimulator.Constant.*;
-import static atmsimulator.MainApp.users;
+import static atmsimulator.MainApp.*;
 
 public class FundTransferScreen implements BaseScreen {
     public static String destinationAcc;
     public static String transferAmt;
     public static String referenceNum;
-
-    FundTransferServices fundTransferServices = new FundTransferServicesImpl();
 
     public void show() {
 
@@ -71,7 +67,6 @@ public class FundTransferScreen implements BaseScreen {
     }
 
     public void inputReferenceNumber() {
-        FundTransferScreen fundTransferScreen = new FundTransferScreen();
         System.out.print("Please enter reference number: ");
         Scanner scan = new Scanner(System.in);
         FundTransferScreen.referenceNum = scan.nextLine();
@@ -99,13 +94,11 @@ public class FundTransferScreen implements BaseScreen {
 
         switch (opt) {
             case "1":
-                FundTransferSummaryScreen fundTransferSummaryScreen = new FundTransferSummaryScreen();
                 System.out.println("Move to fund Transfer summary screen");
                 WelcomeScreen.balance -= Integer.parseInt(FundTransferScreen.transferAmt);
                 fundTransferSummaryScreen.show();
                 break;
             case "2":
-                TransactionScreen transactionScreen = new TransactionScreen();
                 transactionScreen.show();
                 break;
             case "":

@@ -2,13 +2,10 @@ package atmsimulator.screen;
 
 import java.util.Scanner;
 
+import static atmsimulator.MainApp.*;
+
 public class TransactionScreen implements BaseScreen {
     public void show() {
-
-        WithdrawScreen withdrawScreen = new WithdrawScreen();
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
-        FundTransferScreen fundTransferScreen = new FundTransferScreen();
-
         System.out.println("Transaction Screen");
         System.out.println("----------------");
 

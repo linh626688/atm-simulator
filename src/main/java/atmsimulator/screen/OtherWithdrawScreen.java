@@ -7,12 +7,12 @@ import java.util.Scanner;
 
 import static atmsimulator.Constant.OTHER_WITHDRAW_SCREEN;
 import static atmsimulator.Constant.SUMMARY_SCREEN;
+import static atmsimulator.MainApp.otherWithdrawScreen;
+import static atmsimulator.MainApp.summaryScreen;
 
 public class OtherWithdrawScreen implements BaseScreen {
 
     public void show() {
-        SummaryScreen summaryScreen = new SummaryScreen();
-        OtherWithdrawScreen otherWithdrawScreen = new OtherWithdrawScreen();
         WithdrawServices withdrawServices = new WithdrawServicesImpl();
 
         System.out.println("Other Withdraw Screen");

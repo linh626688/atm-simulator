@@ -5,13 +5,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import static atmsimulator.MainApp.transactionScreen;
+import static atmsimulator.MainApp.welcomeScreen;
+
 public class SummaryScreen implements BaseScreen {
 
     public void show() {
-
-        TransactionScreen ts = new TransactionScreen();
-        WelcomeScreen ws = new WelcomeScreen();
-
         DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Scanner scan = new Scanner(System.in);
@@ -28,10 +27,10 @@ public class SummaryScreen implements BaseScreen {
         int opt = scan.nextInt();
         switch (opt) {
             case 1:
-                ts.show();
+                transactionScreen.show();
                 break;
             case 2:
-                ws.show();
+                welcomeScreen.show();
                 break;
             default:
                 System.out.println("default");

@@ -5,10 +5,12 @@ import atmsimulator.services.impl.FundTransferServicesImpl;
 
 import java.util.Scanner;
 
+import static atmsimulator.MainApp.transactionScreen;
+import static atmsimulator.MainApp.welcomeScreen;
+
 public class FundTransferSummaryScreen implements BaseScreen {
 
     public void show() {
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
         FundTransferServices fundTransferServices = new FundTransferServicesImpl();
         System.out.println("Fund Transfer Summary Screen");
         System.out.println("----------------------");
@@ -26,8 +28,10 @@ public class FundTransferSummaryScreen implements BaseScreen {
 
         switch (opt) {
             case "1":
-                fundTransferServices.transaction();
-            break;
+                if (fundTransferServices.validateTransaction()) {
+                    transactionScreen.show();
+                }
+                break;
             case "2":
                 welcomeScreen.show();
                 break;

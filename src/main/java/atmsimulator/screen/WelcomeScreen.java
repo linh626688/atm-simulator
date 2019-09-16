@@ -5,6 +5,9 @@ import atmsimulator.services.impl.UserServicesImpl;
 
 import java.util.Scanner;
 
+import static atmsimulator.MainApp.transactionScreen;
+import static atmsimulator.MainApp.welcomeScreen;
+
 public class WelcomeScreen implements BaseScreen {
 
     public static String accNumberStatic;
@@ -15,7 +18,6 @@ public class WelcomeScreen implements BaseScreen {
 
         UserServices userServices = new UserServicesImpl();
 
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Welcome Screen");
@@ -37,7 +39,6 @@ public class WelcomeScreen implements BaseScreen {
         }
 
         if (userServices.validate(accNumberStatic, pinStatic)) {
-            TransactionScreen transactionScreen = new TransactionScreen();
             transactionScreen.show();
         }
 
