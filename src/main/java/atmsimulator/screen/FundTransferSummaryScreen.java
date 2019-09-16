@@ -10,7 +10,6 @@ public class FundTransferSummaryScreen implements BaseScreen {
     public void show() {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
         FundTransferServices fundTransferServices = new FundTransferServicesImpl();
-        FundTransferSummaryScreen fundTransferSummaryScreen = new FundTransferSummaryScreen();
         System.out.println("Fund Transfer Summary Screen");
         System.out.println("----------------------");
 

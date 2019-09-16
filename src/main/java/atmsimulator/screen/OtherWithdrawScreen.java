@@ -5,6 +5,9 @@ import atmsimulator.services.impl.WithdrawServicesImpl;
 
 import java.util.Scanner;
 
+import static atmsimulator.Constant.OTHER_WITHDRAW_SCREEN;
+import static atmsimulator.Constant.SUMMARY_SCREEN;
+
 public class OtherWithdrawScreen implements BaseScreen {
 
     public void show() {
@@ -18,6 +21,16 @@ public class OtherWithdrawScreen implements BaseScreen {
         Scanner scan = new Scanner(System.in);
         String amount = scan.nextLine();
 
-        withdrawServices.validateAndCalculateWithdrawAmount(amount, otherWithdrawScreen, summaryScreen);
+        String screenShow = withdrawServices.validateAndCalculateWithdrawAmount(amount);
+        switch (screenShow) {
+            case OTHER_WITHDRAW_SCREEN:
+                otherWithdrawScreen.show();
+                break;
+            case SUMMARY_SCREEN:
+                summaryScreen.show();
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -24,14 +24,22 @@ public class WelcomeScreen implements BaseScreen {
         System.out.print("Enter Account Number: ");
         accNumberStatic = scan.nextLine();
 
-        userServices.validateAccountNumber(accNumberStatic, welcomeScreen);
+        if (!userServices.validateAccountNumber(accNumberStatic)) {
+            welcomeScreen.show();
+        }
+
 
         System.out.print("Enter PIN: ");
         pinStatic = scan.nextLine();
 
-        userServices.validatePinNumber(pinStatic, welcomeScreen);
+        if (!userServices.validatePinNumber(pinStatic)) {
+            welcomeScreen.show();
+        }
 
-        userServices.validate( accNumberStatic, pinStatic);
+        if (userServices.validate(accNumberStatic, pinStatic)) {
+            TransactionScreen transactionScreen = new TransactionScreen();
+            transactionScreen.show();
+        }
 
     }
 

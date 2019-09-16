@@ -13,6 +13,8 @@ public class MainApp {
 
     public static void main(String[] args) {
         WelcomeScreen welcomeScreen = new WelcomeScreen();
-        welcomeScreen.show();
+        for (;;){
+            welcomeScreen.show();
+        }
     }
 }

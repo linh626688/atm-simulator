@@ -20,7 +20,6 @@ public class TransactionScreen implements BaseScreen {
         String opt = scan.nextLine();
 
         switch (opt) {
-
             case "1":
                 withdrawScreen.show();
                 break;

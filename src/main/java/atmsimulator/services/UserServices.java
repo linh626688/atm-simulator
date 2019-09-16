@@ -1,14 +1,17 @@
 package atmsimulator.services;
 
+import atmsimulator.model.Account;
 import atmsimulator.screen.BaseScreen;
 
 
 public interface UserServices {
 
-	public void validate(String accountNumber, String pin);
+	public boolean validate(String accountNumber, String pin);
 
-	public void validateAccountNumber(String accountNumber, BaseScreen welcomeScreen);
+	public boolean validateAccountNumber(String accountNumber);
 
-	public void validatePinNumber(String pin, BaseScreen welcomeScreen);
+	public boolean validatePinNumber(String pin);
+
+	public Account verifyUser(String accountNumber, String pin);
 
 }

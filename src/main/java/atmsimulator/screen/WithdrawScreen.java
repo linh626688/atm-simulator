@@ -6,7 +6,9 @@ import atmsimulator.services.impl.WithdrawServicesImpl;
 
 import java.util.Scanner;
 
-public class WithdrawScreen implements BaseScreen{
+import static atmsimulator.Constant.*;
+
+public class WithdrawScreen implements BaseScreen {
     public static String withdrawAmount;
 
     public void show() {
@@ -23,23 +25,39 @@ public class WithdrawScreen implements BaseScreen{
         TransactionScreen transactionScreen = new TransactionScreen();
         OtherWithdrawScreen otherWithdrawScreen = new OtherWithdrawScreen();
         WithdrawServices withdrawServices = new WithdrawServicesImpl();
-
+        String screenShow = null;
         switch (opt) {
             case 1:
-                withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, summaryScreen, transactionScreen, 10);
+                screenShow = withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, 10);
                 break;
             case 2:
-                withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, summaryScreen, transactionScreen, 50);
+                screenShow = withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, 50);
                 break;
             case 3:
-                withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, summaryScreen, transactionScreen, 100);
+                screenShow = withdrawServices.calculateWithdrawAmount(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic, 100);
                 break;
             case 4:
-                otherWithdrawScreen.show();
+                screenShow = OTHER_WITHDRAW_SCREEN;
                 break;
             default:
-                transactionScreen.show();
+                screenShow = TRANSACTION_SCREEN;
                 break;
         }
+        if (screenShow != null) {
+            switch (screenShow) {
+                case OTHER_WITHDRAW_SCREEN:
+                    otherWithdrawScreen.show();
+                    break;
+                case TRANSACTION_SCREEN:
+                    transactionScreen.show();
+                    break;
+                case SUMMARY_SCREEN:
+                    summaryScreen.show();
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }
