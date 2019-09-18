@@ -11,7 +11,8 @@ public class TransactionScreen implements BaseScreen {
 
         System.out.println("1. Withdraw ");
         System.out.println("2. Fund Transfer");
-        System.out.println("3. Exit ");
+        System.out.println("3. Transfer Log");
+        System.out.println("4. Exit ");
 
         Scanner scan = new Scanner(System.in);
         String opt = scan.nextLine();
@@ -22,6 +23,9 @@ public class TransactionScreen implements BaseScreen {
                 break;
             case "2":
                 fundTransferScreen.show();
+                break;
+            case "3":
+                transactionLogScreen.show();
                 break;
             default:
                 welcomeScreen.show();

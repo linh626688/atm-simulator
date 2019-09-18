@@ -1,5 +1,7 @@
 package atmsimulator.services.impl;
 
+import atmsimulator.DAO.AccountDAO;
+import atmsimulator.DAO.impl.AccountDAOImpl;
 import atmsimulator.model.Account;
 import atmsimulator.screen.WelcomeScreen;
 import atmsimulator.services.UserServices;
@@ -9,11 +11,12 @@ import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
 import static atmsimulator.MainApp.users;
 
 public class UserServicesImpl implements UserServices {
+    private AccountDAO accountDAO = new AccountDAOImpl();
 
     @Override
     public boolean validate(String accountNumber, String pin) {
         boolean isValid = false;
-        Account user = verifyUser(accountNumber, pin);
+        Account user = accountDAO.findUserByAccountNumberAndPin(accountNumber, pin);
         if (user != null) {
             WelcomeScreen.balance = user.getBalance();
             isValid = true;
@@ -50,11 +53,4 @@ public class UserServicesImpl implements UserServices {
         return true;
     }
 
-    @Override
-    public Account verifyUser(String accountNumber, String pin) {
-        return users.stream()
-                .filter(user -> accountNumber.equals(user.getAccountNumber()) && pin.equals(user.getPIN()))
-                .findAny()
-                .orElse(null);
-    }
 }

@@ -2,7 +2,12 @@ package atmsimulator.screen;
 
 
 import atmsimulator.model.Account;
+import atmsimulator.model.Transaction;
+import atmsimulator.services.TransactionServices;
+import atmsimulator.services.impl.TransactionServicesImpl;
+import atmsimulator.utils.Utils;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import static atmsimulator.Constant.*;
@@ -12,6 +17,7 @@ public class FundTransferScreen implements BaseScreen {
     public static String destinationAcc;
     public static String transferAmt;
     public static String referenceNum;
+    private TransactionServices transactionServices = new TransactionServicesImpl();
 
     public void show() {
 
@@ -97,6 +103,13 @@ public class FundTransferScreen implements BaseScreen {
             case "1":
                 System.out.println("Move to fund Transfer summary screen");
                 WelcomeScreen.balance -= Integer.parseInt(FundTransferScreen.transferAmt);
+                Transaction transaction = new Transaction();
+                transaction.setAccountNumber(WelcomeScreen.accNumberStatic);
+                transaction.setAmount(FundTransferScreen.transferAmt);
+                transaction.setRef(FundTransferScreen.referenceNum);
+                transaction.setTime(Utils.dateTimeFormat.format(LocalDateTime.now()));
+                transaction.setType(TRANSACTION_FUND_TRANSFER);
+                transactionServices.addTransaction(transaction);
                 fundTransferSummaryScreen.show();
                 break;
             case "2":

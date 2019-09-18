@@ -1,8 +1,5 @@
 package atmsimulator.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Account {
 
     private String name;
@@ -18,7 +15,7 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    private Account() {
+    public Account() {
 
     }
 
