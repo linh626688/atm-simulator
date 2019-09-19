@@ -1,11 +1,36 @@
 package atmsimulator.model;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
 public class Transaction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @Column(name = "account_number")
     private String accountNumber;
-    private String time;
+
+    @Column(name = "time")
+    private LocalDateTime time;
+
+    @Column(name = "amount")
     private String amount;
+
+    @Column(name = "type")
     private String type;
+
+    @Column(name = "ref")
     private String ref;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAccountNumber() {
         return accountNumber;
@@ -15,11 +40,11 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
-    public String getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

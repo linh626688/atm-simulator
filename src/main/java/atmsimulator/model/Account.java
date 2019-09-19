@@ -1,10 +1,23 @@
 package atmsimulator.model;
 
-public class Account {
+import javax.persistence.*;
 
+@Entity
+public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "pin")
     private String pin;
+
+    @Column(name = "balance")
     private int balance;
+
+    @Column(name = "account_number")
     private String accountNumber;
 
 
@@ -19,6 +32,21 @@ public class Account {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
 
     public String getName() {
         return name;
@@ -26,14 +54,6 @@ public class Account {
 
     public void setName(String name) {
 		this.name = name;
-    }
-
-    public String getPIN() {
-        return pin;
-    }
-
-    public void setPIN(String pin) {
-        this.pin = pin;
     }
 
     public int getBalance() {

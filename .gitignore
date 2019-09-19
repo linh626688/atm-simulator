@@ -110,3 +110,8 @@ fabric.properties
 hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,intellij
+.idea/encodings.xml
+.idea/misc.xml
+.idea/dataSources.xml
+.idea/compiler.xml
+.idea/artifacts/casestudy1_war_exploded.xml
