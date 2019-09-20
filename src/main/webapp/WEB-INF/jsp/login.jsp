@@ -6,11 +6,23 @@
     <table>
         <tr>
             <td>Account Number :</td>
-            <td><form:input path="accountNumber"/></td>
+            <td>
+                <form:input path="accountNumber"
+                            type="text"
+                            required="true"
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                            maxlength="6"/>
+            </td>
         </tr>
         <tr>
             <td>PIN :</td>
-            <td><form:input path="pin"/></td>
+            <td>
+                <form:input path="pin"
+                            type="password"
+                            required="true"
+                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                            maxlength="6"/>
+            </td>
         </tr>
         <tr>
             <td></td>

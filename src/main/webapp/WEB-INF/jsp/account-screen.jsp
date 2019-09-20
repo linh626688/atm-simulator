@@ -22,7 +22,7 @@
         <td><a href="withdraw">Withdraw</a></td>
     </tr>
     <tr>
-        <td><input type="submit" value="FundTransfer"/></td>
+        <td><a href="fund-transfer">FundTransfer</a></td>
     </tr>
     <tr>
         <td><a href="/">Exit</a></td>

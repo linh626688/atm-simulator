@@ -11,7 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -105,12 +111,32 @@ public class ATMController {
         return "summary";
     }
 
-//    @RequestMapping(value="/editemp/{id}")
-//    public String edit(@PathVariable int id, Model m){
-//        Emp emp=dao.getEmpById(id);
-//        m.addAttribute("command",emp);
-//        return "empeditform";
-//    }
+    @RequestMapping(value = "/fund-transfer")
+    public String edit(Model m) {
+        return "fund-transfer";
+    }
+
+    @RequestMapping(value = "/submitTransfer", method = RequestMethod.POST)
+    public String submitTransfer(
+            @RequestParam("accountDestination") String accountDestination,
+            @RequestParam("amount") String amount,
+            @RequestParam("ref") String ref,
+            Model model
+    ) {
+        System.out.println(accountDestination + " " + amount + " " + ref);
+
+        try {
+            if (fundTransferServices.submitFundTransaction(currentAccount.getAccountNumber(), currentAccount.getPin(), accountDestination, Integer.parseInt(amount))) {
+                return "redirect:/account-screen";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("message", "error");
+        return "redirect:/fund-transfer";
+    }
+
+
 //    @RequestMapping(value="/editsave",method = RequestMethod.POST)
 //    public String editsave(@ModelAttribute("emp") Emp emp){
 //        dao.update(emp);
@@ -122,4 +148,11 @@ public class ATMController {
 //        dao.delete(id);
 //        return "redirect:/viewemp";
 //    }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ModelAndView handleAllException(Exception ex, HttpServletRequest req) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("exception", ex);
+        return model;
+    }
 }

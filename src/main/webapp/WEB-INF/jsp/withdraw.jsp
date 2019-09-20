@@ -8,8 +8,9 @@
         <input type="radio" name="withdraw-value" value="50" id="amount"> $50<BR>
         <input type="radio" name="withdraw-value" value="100" id="amount"> $100<BR>
         <div>
-            <input type="radio" name="withdraw-value" value="other"> $ <input type="number" name="other-value" >
-        </div><BR>
+            <input type="radio" name="withdraw-value" value="other"> $ <input type="number" value=0 name="other-value">
+        </div>
+        <BR>
         <input type="submit" value="Submit">
     </form:form>
     <tr>
