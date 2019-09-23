@@ -12,7 +12,6 @@ import static atmsimulator.MainApp.welcomeScreen;
 public class SummaryScreen implements BaseScreen {
 
     public void show() {
-        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Scanner scan = new Scanner(System.in);
 

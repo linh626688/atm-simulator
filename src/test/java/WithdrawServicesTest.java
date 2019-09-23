@@ -1,5 +1,8 @@
+import atmsimulator.DAO.AccountDAO;
+import atmsimulator.DAO.impl.AccountDAOImpl;
 import atmsimulator.services.WithdrawServices;
 import atmsimulator.services.impl.WithdrawServicesImpl;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static atmsimulator.Constant.*;
@@ -7,6 +10,12 @@ import static org.testng.Assert.*;
 
 public class WithdrawServicesTest {
     private WithdrawServices withdrawServices = new WithdrawServicesImpl();
+    private AccountDAO accountDAO = new AccountDAOImpl();
+
+    @BeforeMethod
+    public void importAccount(){
+        accountDAO.importAccount();
+    }
 
     @Test
     public void calculateWithdrawAmountMethod() {

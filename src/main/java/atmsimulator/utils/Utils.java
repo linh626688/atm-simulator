@@ -49,6 +49,6 @@ public class Utils {
         return 100000 + generator.nextInt(900000);
     }
 
-    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm a");
 
 }

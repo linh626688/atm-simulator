@@ -6,8 +6,6 @@ import atmsimulator.model.Account;
 import atmsimulator.screen.WelcomeScreen;
 import atmsimulator.services.UserServices;
 
-import static atmsimulator.MainApp.users;
-
 public class UserServicesImpl implements UserServices {
     private AccountDAO accountDAO = new AccountDAOImpl();
 
@@ -24,31 +22,4 @@ public class UserServicesImpl implements UserServices {
         }
         return isValid;
     }
-
-
-    @Override
-    public boolean validateAccountNumber(String accountNumber) {
-        if (accountNumber.length() != NUMBER_LENGTH) {
-            System.out.println("Account Number should have 6 digits length");
-            return false;
-        }
-        if (!accountNumber.matches(REGEX_MATCH_NUMBER)) {
-            System.out.println("Account Number should only contains numbers");
-        }
-        return true;
-    }
-
-    @Override
-    public boolean validatePinNumber(String pin) {
-        if (pin.length() != NUMBER_LENGTH) {
-            System.out.println("PIN should have 6 digits length");
-            return false;
-        }
-        if (!(pin.matches(REGEX_MATCH_NUMBER))) {
-            System.out.println("PIN should only contains numbers");
-            return false;
-        }
-        return true;
-    }
-
 }
