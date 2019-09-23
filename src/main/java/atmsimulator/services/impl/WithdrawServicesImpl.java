@@ -28,7 +28,7 @@ public class WithdrawServicesImpl implements WithdrawServices {
     TransactionServices transactionServices;
 
     @Override
-    public String calculateWithdrawAmount(String accountNumber, String pin, int amount) {
+    public boolean calculateWithdrawAmount(String accountNumber, String pin, int amount) {
         Account account = accountRepository.findAccountByAccountNumberAndPin(accountNumber, pin);
         if (account != null) {
             if (account.getBalance() >= amount) {
@@ -41,11 +41,9 @@ public class WithdrawServicesImpl implements WithdrawServices {
                 transaction.setType(TRANSACTION_WITHDRAW);
                 transactionRepository.save(transaction);
                 accountRepository.save(account);
-                return SUMMARY_SCREEN;
-            } else if (account.getBalance() < amount) {
-                return TRANSACTION_SCREEN;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }

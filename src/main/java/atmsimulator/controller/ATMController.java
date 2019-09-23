@@ -7,21 +7,19 @@ import atmsimulator.services.TransactionServices;
 import atmsimulator.services.UserServices;
 import atmsimulator.services.WithdrawServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static atmsimulator.Constant.OTHER_WITHDRAW_SCREEN;
+import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
 import static atmsimulator.utils.Utils.dateTimeFormat;
 
 @Controller
@@ -39,43 +37,54 @@ public class ATMController {
     @Autowired
     WithdrawServices withdrawServices;
 
-    @Value("${welcome.message}")
-    private String message;
-
     private Account currentAccount = null;
     private String amount = null;
 
-//    @RequestMapping("/")
-//    public String welcome(Map<String, Object> model) {
-//        model.put("message", this.message);
-//        return "welcome";
-//    }
-
     @RequestMapping("/")
-    public String showFormLogin(Model m) {
-        m.addAttribute("command", new Account());
-        return "login";
+    public ModelAndView showFormLogin(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView view = new ModelAndView("login");
+        Account loginBean = new Account();
+        view.addObject("loginBean", loginBean);
+        return view;
+
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("account") Account account) {
-        currentAccount = userServices.validateLogin(account.getAccountNumber(), account.getPin());
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView save(HttpServletRequest request, HttpServletResponse response,
+                             @ModelAttribute("loginBean") Account loginBean) throws Exception {
+        ModelAndView view = null;
+
+        currentAccount = userServices.validateLogin(loginBean.getAccountNumber(), loginBean.getPin());
         if (currentAccount == null) {
-            return "login";
+            request.setAttribute("msg", "Invalid account or PIN");
+            view = new ModelAndView("login");
+        } else {
+            view = new ModelAndView("redirect:/account-screen");
         }
-        return "redirect:/account-screen";
+        return view;
     }
 
     @RequestMapping(value = "/submitWithdraw", method = RequestMethod.POST)
-    public String submitWithdraw(@RequestParam("withdraw-value") String value, @RequestParam("other-value") String otherValue) {
+    public ModelAndView submitWithdraw(HttpServletRequest request, @RequestParam("withdraw-value") String value, @RequestParam("other-value") String otherValue) {
+        ModelAndView view = null;
         if ("other".equals(value)) {
             amount = otherValue;
-            withdrawServices.calculateWithdrawAmount(currentAccount.getAccountNumber(), currentAccount.getPin(), Integer.parseInt(otherValue));
         } else {
             amount = value;
-            withdrawServices.calculateWithdrawAmount(currentAccount.getAccountNumber(), currentAccount.getPin(), Integer.parseInt(value));
         }
-        return "redirect:/summary";
+        String msg = validateAndCalculateWithdrawAmount(currentAccount.getBalance(), amount);
+
+        if (msg == null) {
+            if(withdrawServices.calculateWithdrawAmount(currentAccount.getAccountNumber(), currentAccount.getPin(), Integer.parseInt(amount))){
+                view = new ModelAndView("redirect:/summary");
+            }else {
+                request.setAttribute("msg", "Error");
+            }
+        } else {
+            request.setAttribute("msg", msg);
+            view = new ModelAndView("withdraw");
+        }
+        return view;
     }
 
 
@@ -136,23 +145,18 @@ public class ATMController {
         return "redirect:/fund-transfer";
     }
 
+    public String validateAndCalculateWithdrawAmount(int balance, String amount) {
+        if (!amount.matches(REGEX_MATCH_NUMBER)) {
+            return "Only Number Allowed";
+        } else if (Integer.parseInt(amount) % 10 != 0) {
+            return "Invalid amount";
 
-//    @RequestMapping(value="/editsave",method = RequestMethod.POST)
-//    public String editsave(@ModelAttribute("emp") Emp emp){
-//        dao.update(emp);
-//        return "redirect:/viewemp";
-//    }
-//
-//    @RequestMapping(value="/deleteemp/{id}",method = RequestMethod.GET)
-//    public String delete(@PathVariable int id){
-//        dao.delete(id);
-//        return "redirect:/viewemp";
-//    }
+        } else if (Integer.parseInt(amount) > 1000) {
+            return "Maximum amount to withdraw is $1000";
 
-    @ExceptionHandler(value = {Exception.class})
-    public ModelAndView handleAllException(Exception ex, HttpServletRequest req) {
-        ModelAndView model = new ModelAndView();
-        model.addObject("exception", ex);
-        return model;
+        } else if (balance - Integer.parseInt(amount) < 0) {
+            return "Insufficient balance $" + amount;
+        }
+        return null;
     }
 }

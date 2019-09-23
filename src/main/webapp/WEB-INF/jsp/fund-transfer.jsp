@@ -2,6 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h1>Fund Transfer </h1>
+<c:if test="${not empty msg}">
+    <h4 style="color: red">${msg}</h4>
+</c:if>
 <form:form method="post" action="submitTransfer">
     <form:errors/>
     <table>

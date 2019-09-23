@@ -105,7 +105,7 @@ public class Utils {
         return  result;
     }
 
-    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm a");
 
     public static int generateRandomRef() {
         return 100000 + generator.nextInt(900000);

@@ -2,14 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h1>Login ATM</h1>
-<form:form method="post" action="save">
+<c:if test="${not empty msg}">
+    <h4 style="color: red">${msg}</h4>
+</c:if>
+<form:form id="loginForm" action="login" method="POST" modelAttribute="loginBean">
     <table>
         <tr>
             <td>Account Number :</td>
             <td>
-                <form:input path="accountNumber"
-                            type="text"
-                            required="true"
+                <form:input id="accountNumber" name="accountNumber" path="accountNumber" required="true"
                             onkeypress='return event.charCode >= 48 && event.charCode <= 57'
                             maxlength="6"/>
             </td>
@@ -17,11 +18,9 @@
         <tr>
             <td>PIN :</td>
             <td>
-                <form:input path="pin"
-                            type="password"
-                            required="true"
-                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'
-                            maxlength="6"/>
+                <form:password id="pin" name="pin" path="pin" required="true"
+                               onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                               maxlength="6"/>
             </td>
         </tr>
         <tr>
@@ -30,4 +29,5 @@
         </tr>
     </table>
 </form:form>
+
 
