@@ -2,6 +2,6 @@ package atmsimulator.services;
 
 public interface FundTransferServices {
 
-    public boolean validateTransaction();
+    public boolean validateTransaction(String accountNumber, String pin );
 
 }

@@ -6,15 +6,13 @@ import atmsimulator.model.Account;
 import atmsimulator.screen.WelcomeScreen;
 import atmsimulator.services.UserServices;
 
-import static atmsimulator.Constant.NUMBER_LENGTH;
-import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
 import static atmsimulator.MainApp.users;
 
 public class UserServicesImpl implements UserServices {
     private AccountDAO accountDAO = new AccountDAOImpl();
 
     @Override
-    public boolean validate(String accountNumber, String pin) {
+    public boolean validateUser(String accountNumber, String pin) {
         boolean isValid = false;
         Account user = accountDAO.findUserByAccountNumberAndPin(accountNumber, pin);
         if (user != null) {

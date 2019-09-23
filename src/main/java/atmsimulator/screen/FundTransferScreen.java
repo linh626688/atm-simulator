@@ -32,7 +32,8 @@ public class FundTransferScreen implements BaseScreen {
         Scanner scan = new Scanner(System.in);
         FundTransferScreen.destinationAcc = scan.nextLine();
 
-        if (!FundTransferScreen.destinationAcc.matches(REGEX_MATCH_NUMBER)) {
+        if (FundTransferScreen.destinationAcc == null
+                || !FundTransferScreen.destinationAcc.matches(REGEX_MATCH_NUMBER)) {
             System.out.println("Invalid account");
             inputDestinationAccount();
         }
@@ -57,7 +58,8 @@ public class FundTransferScreen implements BaseScreen {
         Scanner scan = new Scanner(System.in);
         FundTransferScreen.transferAmt = scan.nextLine();
 
-        if (!FundTransferScreen.transferAmt.matches(REGEX_INPUT_AMOUNT)) {
+        if (FundTransferScreen.transferAmt == null ||
+                !FundTransferScreen.transferAmt.matches(REGEX_INPUT_AMOUNT)) {
             System.out.println("Invalid amount");
             inputAmount();
         } else if (Integer.parseInt(FundTransferScreen.transferAmt) > MAX_VALUE_TRANSFER) {
@@ -78,7 +80,7 @@ public class FundTransferScreen implements BaseScreen {
         Scanner scan = new Scanner(System.in);
         FundTransferScreen.referenceNum = scan.nextLine();
 
-        if (!FundTransferScreen.referenceNum.matches(REGEX_MATCH_NUMBER) && !FundTransferScreen.referenceNum.isEmpty()) {
+        if (FundTransferScreen.referenceNum == null || !FundTransferScreen.referenceNum.matches(REGEX_MATCH_NUMBER)) {
             System.out.println("Invalid Reference Number");
             inputReferenceNumber();
         } else {
@@ -95,6 +97,7 @@ public class FundTransferScreen implements BaseScreen {
 
         System.out.println("1. Confirm Trx");
         System.out.println("2. Cancel Trx");
+        System.out.println("Choose option[2]:");
 
         Scanner scan = new Scanner(System.in);
         String opt = scan.nextLine();
@@ -115,10 +118,8 @@ public class FundTransferScreen implements BaseScreen {
             case "2":
                 transactionScreen.show();
                 break;
-            case "":
-                fundTransferScreen.show();
-                break;
             default:
+                transactionScreen.show();
                 break;
         }
     }

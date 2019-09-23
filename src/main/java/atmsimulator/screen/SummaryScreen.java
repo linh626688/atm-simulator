@@ -12,6 +12,7 @@ import static atmsimulator.MainApp.welcomeScreen;
 public class SummaryScreen implements BaseScreen {
 
     public void show() {
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Scanner scan = new Scanner(System.in);
 
@@ -23,6 +24,7 @@ public class SummaryScreen implements BaseScreen {
 
         System.out.println("1. Transaction");
         System.out.println("2. Exit");
+        System.out.println("Choose option[2]:");
 
         int opt = scan.nextInt();
         switch (opt) {
@@ -33,7 +35,7 @@ public class SummaryScreen implements BaseScreen {
                 welcomeScreen.show();
                 break;
             default:
-                System.out.println("default");
+                welcomeScreen.show();
                 break;
         }
     }
