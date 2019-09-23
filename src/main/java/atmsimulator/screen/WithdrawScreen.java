@@ -19,6 +19,7 @@ public class WithdrawScreen implements BaseScreen {
         System.out.println("3. $100");
         System.out.println("4. Other");
         System.out.println("5. Back");
+        System.out.println("Please choose option[5]:");
 
         Scanner scan = new Scanner(System.in);
         int opt = scan.nextInt();

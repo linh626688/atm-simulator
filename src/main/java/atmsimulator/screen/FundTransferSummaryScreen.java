@@ -22,13 +22,14 @@ public class FundTransferSummaryScreen implements BaseScreen {
 
         System.out.println("1. Transaction");
         System.out.println("2. Exit");
+        System.out.println("Choose option[2]:");
 
         Scanner scan = new Scanner(System.in);
         String opt = scan.nextLine();
 
         switch (opt) {
             case "1":
-                if (fundTransferServices.validateTransaction()) {
+                if (fundTransferServices.validateTransaction(WelcomeScreen.accNumberStatic, WelcomeScreen.pinStatic)) {
                     transactionScreen.show();
                 }
                 break;
@@ -36,7 +37,7 @@ public class FundTransferSummaryScreen implements BaseScreen {
                 welcomeScreen.show();
                 break;
             default:
-                show();
+                welcomeScreen.show();
                 break;
         }
     }

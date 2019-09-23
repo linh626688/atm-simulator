@@ -12,6 +12,7 @@ public class TransactionScreen implements BaseScreen {
         System.out.println("1. Withdraw ");
         System.out.println("2. Fund Transfer");
         System.out.println("3. Exit ");
+        System.out.println("Please choose option[3]:");
 
         Scanner scan = new Scanner(System.in);
         String opt = scan.nextLine();
