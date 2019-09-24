@@ -18,8 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import static atmsimulator.Constant.OTHER_WITHDRAW_SCREEN;
-import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
+import static atmsimulator.Constant.*;
 import static atmsimulator.utils.Utils.dateTimeFormat;
 
 @Controller
@@ -65,8 +64,14 @@ public class ATMController {
     }
 
     @RequestMapping(value = "/submitWithdraw", method = RequestMethod.POST)
-    public ModelAndView submitWithdraw(HttpServletRequest request, @RequestParam("withdraw-value") String value, @RequestParam("other-value") String otherValue) {
+    public ModelAndView submitWithdraw(HttpServletRequest request,
+                                       @RequestParam(value = "withdraw-value", required = false) String value,
+                                       @RequestParam("other-value") String otherValue) {
         ModelAndView view = null;
+        if (value == null) {
+            request.setAttribute("msg", "Error");
+            return new ModelAndView("redirect:/withdraw");
+        }
         if ("other".equals(value)) {
             amount = otherValue;
         } else {
@@ -75,9 +80,9 @@ public class ATMController {
         String msg = validateAndCalculateWithdrawAmount(currentAccount.getBalance(), amount);
 
         if (msg == null) {
-            if(withdrawServices.calculateWithdrawAmount(currentAccount.getAccountNumber(), currentAccount.getPin(), Integer.parseInt(amount))){
+            if (withdrawServices.calculateWithdrawAmount(currentAccount.getAccountNumber(), currentAccount.getPin(), Integer.parseInt(amount))) {
                 view = new ModelAndView("redirect:/summary");
-            }else {
+            } else {
                 request.setAttribute("msg", "Error");
             }
         } else {
@@ -126,23 +131,29 @@ public class ATMController {
     }
 
     @RequestMapping(value = "/submitTransfer", method = RequestMethod.POST)
-    public String submitTransfer(
+    public ModelAndView submitTransfer(
+            HttpServletRequest request,
             @RequestParam("accountDestination") String accountDestination,
             @RequestParam("amount") String amount,
-            @RequestParam("ref") String ref,
-            Model model
+            @RequestParam("ref") String ref
     ) {
-        System.out.println(accountDestination + " " + amount + " " + ref);
+        ModelAndView view = null;
+        String result =
+                fundTransferServices.submitFundTransaction(
+                        currentAccount.getAccountNumber(),
+                        currentAccount.getPin(),
+                        accountDestination,
+                        Integer.parseInt(amount),
+                        ref
+                );
+        if (SUCCESS.equals(result)) {
+            view = new ModelAndView("redirect:/account-screen");
+        } else {
+            request.setAttribute("msg", result);
+            view = new ModelAndView("fund-transfer");
 
-        try {
-            if (fundTransferServices.submitFundTransaction(currentAccount.getAccountNumber(), currentAccount.getPin(), accountDestination, Integer.parseInt(amount))) {
-                return "redirect:/account-screen";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        model.addAttribute("message", "error");
-        return "redirect:/fund-transfer";
+        return view;
     }
 
     public String validateAndCalculateWithdrawAmount(int balance, String amount) {

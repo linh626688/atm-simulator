@@ -7,9 +7,8 @@ public class Constant {
     public static final int NUMBER_LENGTH = 6;
     public static final int MAX_VALUE_TRANSFER = 1000;
     public static final String OTHER_WITHDRAW_SCREEN = "OTHER_WITH_DRAW_SCREEN";
-    public static final String SUMMARY_SCREEN = "SUMMARY_SCREEN";
-    public static final String TRANSACTION_SCREEN = "TRANSACTION_SCREEN";
     public static final String CSV_SEPARATOR = ",";
     public static final String TRANSACTION_WITHDRAW = "TRANSACTION_WITHDRAW";
     public static final String TRANSACTION_FUND_TRANSFER = "TRANSACTION_FUND_TRANSFER";
+    public static final String SUCCESS = "SUCCESS";
 }
