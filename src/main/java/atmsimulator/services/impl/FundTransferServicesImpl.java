@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import static atmsimulator.Constant.TRANSACTION_FUND_TRANSFER;
-import static atmsimulator.Constant.TRANSACTION_WITHDRAW;
+import static atmsimulator.Constant.*;
 
 @Service
 public class FundTransferServicesImpl implements FundTransferServices {
@@ -24,23 +23,20 @@ public class FundTransferServicesImpl implements FundTransferServices {
     TransactionRepository transactionRepository;
 
     @Override
-    public boolean submitFundTransaction(String accountNumber, String pin, String destination, int amount) throws Exception {
+    public String submitFundTransaction(String accountNumber, String pin, String destination, int amount, String ref) {
         //validate destination
         Account currentAccount = accountRepository.findAccountByAccountNumberAndPin(accountNumber, pin);
         Account destinationAccount = accountRepository.findAccountByAccountNumber(destination);
 
         if (currentAccount == null || destinationAccount == null) {
-            throw new Exception("Account is invalid");
+            return "Account is invalid";
         }
         if (currentAccount.getBalance() <= amount) {
-            throw new Exception("Insufficient balance $" + amount);
+            return "Insufficient balance $" + amount;
         }
-        if (currentAccount.getBalance() > 1000) {
-            throw new Exception("Maximum amount to withdraw is $1000");
+        if (amount > 1000) {
+            return "Maximum amount to transfer is $1000";
         }
-        //validate balance
-
-        //transfer
 
         currentAccount.setBalance(currentAccount.getBalance() - amount);
         destinationAccount.setBalance(destinationAccount.getBalance() + amount);
@@ -48,10 +44,10 @@ public class FundTransferServicesImpl implements FundTransferServices {
         Transaction transaction = new Transaction();
         transaction.setAccountNumber(accountNumber);
         transaction.setAmount(String.valueOf(amount));
-        transaction.setRef(String.valueOf(Utils.generateRandomRef()));
+        transaction.setRef(ref);
         transaction.setTime(LocalDateTime.now());
         transaction.setType(TRANSACTION_FUND_TRANSFER);
         transactionRepository.save(transaction);
-        return true;
+        return SUCCESS;
     }
 }
