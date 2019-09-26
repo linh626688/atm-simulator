@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Optional;
 
 import static atmsimulator.Constant.*;
 
@@ -26,9 +27,9 @@ public class FundTransferServicesImpl implements FundTransferServices {
     public String submitFundTransaction(String accountNumber, String pin, String destination, int amount, String ref) {
         //validate destination
         Account currentAccount = accountRepository.findAccountByAccountNumberAndPin(accountNumber, pin);
-        Account destinationAccount = accountRepository.findAccountByAccountNumber(destination);
+        Optional<Account> destinationAccount = accountRepository.findAccountByAccountNumber(destination);
 
-        if (currentAccount == null || destinationAccount == null) {
+        if (currentAccount == null || !destinationAccount.isPresent()) {
             return "Account is invalid";
         }
         if (currentAccount.getBalance() <= amount) {
@@ -39,8 +40,8 @@ public class FundTransferServicesImpl implements FundTransferServices {
         }
 
         currentAccount.setBalance(currentAccount.getBalance() - amount);
-        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
-        accountRepository.save(Arrays.asList(currentAccount, destinationAccount));
+        destinationAccount.get().setBalance(destinationAccount.get().getBalance() + amount);
+        accountRepository.save(Arrays.asList(currentAccount, destinationAccount.get()));
         Transaction transaction = new Transaction();
         transaction.setAccountNumber(accountNumber);
         transaction.setAmount(String.valueOf(amount));

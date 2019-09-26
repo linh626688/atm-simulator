@@ -17,7 +17,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
         basePackageClasses = {SpringBootWebApplication.class, Jsr310JpaConverters.class}
 )
 @SpringBootApplication
-public class SpringBootWebApplication extends SpringBootServletInitializer  implements CommandLineRunner {
+public class SpringBootWebApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
     @Autowired
     AccountRepository accountRepository;

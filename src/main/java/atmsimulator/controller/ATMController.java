@@ -16,14 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 import static atmsimulator.Constant.*;
 import static atmsimulator.utils.Utils.dateTimeFormat;
 
 @Controller
 public class ATMController {
-
     @Autowired
     UserServices userServices;
 
@@ -39,9 +37,9 @@ public class ATMController {
     private Account currentAccount = null;
     private String amount = null;
 
-    @RequestMapping("/")
+    @RequestMapping("/login")
     public ModelAndView showFormLogin(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView view = new ModelAndView("login");
+        ModelAndView view = new ModelAndView("signin");
         Account loginBean = new Account();
         view.addObject("loginBean", loginBean);
         return view;
@@ -56,7 +54,7 @@ public class ATMController {
         currentAccount = userServices.validateLogin(loginBean.getAccountNumber(), loginBean.getPin());
         if (currentAccount == null) {
             request.setAttribute("msg", "Invalid account or PIN");
-            view = new ModelAndView("login");
+            view = new ModelAndView("signin");
         } else {
             view = new ModelAndView("redirect:/account-screen");
         }
