@@ -7,8 +7,11 @@ import atmsimulator.repository.TransactionRepository;
 import atmsimulator.services.TransactionServices;
 import atmsimulator.services.WithdrawServices;
 import atmsimulator.utils.Utils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +19,9 @@ import java.time.LocalDateTime;
 import static atmsimulator.Constant.*;
 
 @Service
+@Transactional
 public class WithdrawServicesImpl implements WithdrawServices {
+    Logger logger = LogManager.getLogger(WithdrawServicesImpl.class);
 
     @Autowired
     AccountRepository accountRepository;
@@ -36,11 +41,20 @@ public class WithdrawServicesImpl implements WithdrawServices {
                 Transaction transaction = new Transaction();
                 transaction.setAccountNumber(accountNumber);
                 transaction.setAmount(String.valueOf(amount));
-                transaction.setRef(String.valueOf(Utils.generateRandomRef()));
+                String ref = String.valueOf(Utils.generateRandomRef());
+                transaction.setRef(ref);
                 transaction.setTime(LocalDateTime.now());
                 transaction.setType(TRANSACTION_WITHDRAW);
-                transactionRepository.save(transaction);
-                accountRepository.save(account);
+                try {
+                    transactionRepository.save(transaction);
+                    logger.info("update info account - account: " + account.getAccountNumber());
+
+                    accountRepository.save(account);
+                    logger.info("insert new transaction - ref: " + ref);
+
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage());
+                }
                 return true;
             }
         }

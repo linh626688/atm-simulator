@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static atmsimulator.Constant.CSV_SEPARATOR;
+import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
 
 public class Utils {
     private static final Random generator = new Random();
@@ -111,4 +112,18 @@ public class Utils {
         return 100000 + generator.nextInt(900000);
     }
 
+    public static String validateAndCalculateWithdrawAmount(int balance, String amount) {
+        if (!amount.matches(REGEX_MATCH_NUMBER)) {
+            return "Only Number Allowed";
+        } else if (Integer.parseInt(amount) % 10 != 0) {
+            return "Invalid amount";
+
+        } else if (Integer.parseInt(amount) > 1000) {
+            return "Maximum amount to withdraw is $1000";
+
+        } else if (balance - Integer.parseInt(amount) < 0) {
+            return "Insufficient balance $" + amount;
+        }
+        return null;
+    }
 }

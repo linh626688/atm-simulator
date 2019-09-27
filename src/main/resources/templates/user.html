@@ -10,12 +10,29 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>User page (Spring Security protected)</h1>
+        <h3 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h3>
+        <div class="row">
+            <div class="col-md-2">Name:</div>
+            <div class="col-lg-3" th:utext="${name}"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">Balance:</div>
+            <div class="col-lg-3">$
+                <span th:utext="${balance}"></span>
+            </div>
+        </div>
+        <div style="padding-top: 5px">
+            <a th:href="@{/transaction-logs}" class="btn btn-primary"><i class="fas fa-user-edit ml-2">Transaction
+                Logs</i></a>
+        </div>
+        <div style="padding-top: 5px">
+            <a th:href="@{/withdraw}" class="btn btn-primary"><i class="fas fa-user-edit ml-2">Withdraw</i></a>
 
-        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-        <form th:action="@{/logout}" method="post">
-        </form>
+        </div>
+        <div style="padding-top: 5px">
+            <a th:href="@{/fund-transfer}" class="btn btn-primary"><i class="fas fa-user-edit ml-2">FundTransfer</i></a>
 
+        </div>
     </div>
 
 </div>

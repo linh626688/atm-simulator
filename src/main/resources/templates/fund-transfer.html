@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Fund Transfer Page</h1>
+        <div th:if="${msg}" th:utext="${msg}"
+             style="color:red;font-style:italic;">
+            ...
+        </div>
+    </div>
+    <form th:action="@{/submitTransfer}" th:object="${fundTransferDTO}" method="post">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="destinationAccount">Destination Account</label>
+                    <input required="true" type="number" th:field="*{destinationAccount}" class="form-control"
+                           id="destinationAccount" placeholder="Destination Account"/>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input required="true" type="number" th:field="*{amount}" class="form-control" id="amount"
+                           placeholder="Amount"/>
+                </div>
+                <div class="form-group">
+                    <label for="ref">Ref</label>
+                    <input required="true" type="number" th:field="*{ref}" class="form-control" id="ref" placeholder="Ref"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3" style="padding: 5px">
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Withdraw"/>
+            </div>
+        </div>
+    </form>
+
+</div>
+<!-- /.container -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

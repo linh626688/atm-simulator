@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Withdraw Page</h1>
+    </div>
+    <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+        ...
+    </div>
+    <form th:action="@{/submitWithdraw}" th:object="${withdrawDTO}" method="post">
+        <div class="row">
+            <div class="col-lg-3" >
+                <div class="input-group" style="padding: 5px">
+                  <span class="input-group-addon">
+                    <input type="radio" th:field="*{amount}" name="amount" id="amount" value="10"/>
+                  </span>
+                    <span class="form-control">
+                    $10
+                  </span>
+                </div>
+                <div class="input-group" style="padding: 5px">
+                  <span class="input-group-addon">
+                    <input type="radio" th:field="*{amount}" name="amount" id="amount" value="50"/>
+                  </span>
+                    <span class="form-control">
+                    $50
+                  </span>
+                </div>
+                <div class="input-group" style="padding: 5px">
+                  <span class="input-group-addon">
+                    <input type="radio" th:field="*{amount}" name="amount" id="amount" value="100"/>
+                  </span>
+                    <span class="form-control">
+                    $100
+                  </span>
+                </div>
+                <div class="input-group" style="padding: 5px">
+                  <span class="input-group-addon">
+                    <input type="radio" th:field="*{amount}" name="amount" id="amount" value="other"/>
+                  </span>
+                    <input type="number" class="form-control" th:field="*{value}" placeholder="0"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-3" style="padding: 5px">
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Withdraw"/>
+            </div>
+        </div>
+    </form>
+
+</div>
+<!-- /.container -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

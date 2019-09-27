@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>Transaction Logs Page</h1>
+
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <div class="panel panel-default">
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Time</th>
+                    <th>Amount</th>
+                    <th>Type Transaction</th>
+                    <th>Ref</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="trans, iStat : ${transactionsPage.content}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'">
+                    <td th:text="${trans.accountNumber}"/>
+                    <td th:text="${trans.time}"/>
+                    <td>$<span th:text="${trans.amount}"></span></td>
+                    <td th:text="${trans.type}"/>
+                    <td th:text="${trans.ref}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div th:if="${transactionsPage.totalPages > 0}" class="pagination"
+         th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{/transaction-logs(size=${transactionsPage.size}, page=${pageNumber})}"
+           th:text="${pageNumber}"
+           th:class="${pageNumber==transactionsPage.number + 1} ? active"></a>
+    </div>
+
+</div>
+<!-- /.container -->
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
