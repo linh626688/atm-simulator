@@ -42,19 +42,19 @@ public class ThymeleafController {
 
     @GetMapping("/")
     public String home() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/home")
     public String home1() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/signin")
     public String login(Model model) {
         Account account = new Account();
         model.addAttribute("account", account);
-        return "/signin";
+        return "signin";
     }
 
     @GetMapping("/user")
@@ -65,7 +65,7 @@ public class ThymeleafController {
             model.addAttribute("name", account.get().getName());
             model.addAttribute("balance", account.get().getBalance());
         }
-        return "/user";
+        return "user";
     }
 
     @GetMapping("/transaction-logs")
@@ -89,7 +89,7 @@ public class ThymeleafController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-        return "/transaction-logs";
+        return "transaction-logs";
     }
 
     @GetMapping("/withdraw")
@@ -97,7 +97,7 @@ public class ThymeleafController {
         WithdrawDTO withdrawDTO = new WithdrawDTO();
         model.addAttribute("withdrawDTO", withdrawDTO);
 
-        return "/withdraw";
+        return "withdraw";
     }
 
     @PostMapping("/submitWithdraw")
@@ -135,7 +135,7 @@ public class ThymeleafController {
     public String fundTransfer(Model model) {
         FundTransferDTO fundTransferDTO = new FundTransferDTO();
         model.addAttribute("fundTransferDTO", fundTransferDTO);
-        return "/fund-transfer";
+        return "fund-transfer";
     }
 
     @PostMapping("/submitTransfer")
