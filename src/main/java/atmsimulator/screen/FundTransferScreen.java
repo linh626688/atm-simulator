@@ -4,7 +4,9 @@ package atmsimulator.screen;
 import atmsimulator.model.Account;
 import atmsimulator.model.Transaction;
 import atmsimulator.services.TransactionServices;
+import atmsimulator.services.UserServices;
 import atmsimulator.services.impl.TransactionServicesImpl;
+import atmsimulator.services.impl.UserServicesImpl;
 import atmsimulator.utils.Utils;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class FundTransferScreen implements BaseScreen {
     public static String transferAmt;
     public static String referenceNum;
     private TransactionServices transactionServices = new TransactionServicesImpl();
+    private UserServices userServices = new UserServicesImpl();
 
     public void show() {
 
@@ -33,7 +36,8 @@ public class FundTransferScreen implements BaseScreen {
         FundTransferScreen.destinationAcc = scan.nextLine();
 
         if (FundTransferScreen.destinationAcc == null
-                || !FundTransferScreen.destinationAcc.matches(REGEX_MATCH_NUMBER)) {
+                || !FundTransferScreen.destinationAcc.matches(REGEX_MATCH_NUMBER)
+                || !userServices.validateUserByAccountNumber(FundTransferScreen.destinationAcc)) {
             System.out.println("Invalid account");
             inputDestinationAccount();
         }

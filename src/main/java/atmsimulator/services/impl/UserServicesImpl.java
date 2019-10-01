@@ -22,4 +22,10 @@ public class UserServicesImpl implements UserServices {
         }
         return isValid;
     }
+
+    @Override
+    public boolean validateUserByAccountNumber(String accountNumber) {
+        Account user = accountDAO.findUserByAccountNumber(accountNumber);
+        return user != null;
+    }
 }

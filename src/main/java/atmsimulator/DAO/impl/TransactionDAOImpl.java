@@ -2,9 +2,8 @@ package atmsimulator.DAO.impl;
 
 import atmsimulator.DAO.TransactionDAO;
 import atmsimulator.model.Transaction;
-import atmsimulator.utils.Utils;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,10 +11,40 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static atmsimulator.Constant.CSV_SEPARATOR;
+
 public class TransactionDAOImpl implements TransactionDAO {
     @Override
     public void addTransaction(Transaction transaction) {
-        Utils.writeTransactionLog(transaction);
+        try {
+            StringBuffer firstLine = new StringBuffer();
+            firstLine.append("Account Number,Time,Amount,Type,Ref\n");
+            File tempFile = new File("./transaction.csv");
+            boolean isExistsFile = tempFile.exists();
+            PrintWriter bw = new PrintWriter(new BufferedWriter(new FileWriter("transaction.csv", true)));
+            // header line
+            if (!isExistsFile) {
+                bw.write(firstLine.toString());
+            }
+            // log
+            StringBuffer oneLine = new StringBuffer();
+            oneLine.append(transaction.getAccountNumber());
+            oneLine.append(CSV_SEPARATOR);
+            oneLine.append(transaction.getTime());
+            oneLine.append(CSV_SEPARATOR);
+            oneLine.append(transaction.getAmount());
+            oneLine.append(CSV_SEPARATOR);
+            oneLine.append(transaction.getType());
+            oneLine.append(CSV_SEPARATOR);
+            oneLine.append(transaction.getRef());
+            oneLine.append('\n');
+            bw.write(oneLine.toString());
+
+            bw.flush();
+            bw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

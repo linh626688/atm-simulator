@@ -16,7 +16,7 @@ import static atmsimulator.MainApp.users;
 public class AccountDAOImpl implements AccountDAO {
     @Override
     public void importAccount() {
-        String fileName = "./input_account.csv";
+        String fileName = "./src/main/resources/input_account.csv";
         List<String> list = new ArrayList<>();
 
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
@@ -35,7 +35,13 @@ public class AccountDAOImpl implements AccountDAO {
             account.setPIN(infoUser[1]);
             account.setBalance(Integer.parseInt(infoUser[2]));
             account.setAccountNumber(infoUser[3]);
-            users.add(account);
+            if (users.stream()
+                    .filter(item -> item.getAccountNumber().equals(infoUser[3]))
+                    .findAny()
+                    .orElse(null) == null
+            ) {
+                users.add(account);
+            }
         });
     }
 
