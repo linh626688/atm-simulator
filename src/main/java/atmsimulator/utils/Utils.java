@@ -4,8 +4,7 @@ import atmsimulator.model.Account;
 import atmsimulator.model.Transaction;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.nio.file.Paths;
 
 import static atmsimulator.Constant.REGEX_MATCH_NUMBER;
 
@@ -45,16 +45,17 @@ public class Utils {
         return listObjTransactions;
     }
 
-    public static List<Account> importAccountFromCSV() {
-        String fileName = ".src/main/resources/input_account.csv";
+    public static List<Account> importAccountFromCSV(InputStream is) {
         List<String> list = new ArrayList<>();
         List<Account> result = new ArrayList<>();
-
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            list = stream
-                    .filter((line) -> !line.startsWith("Name"))
+        Path path = null;
+        try {
+            Path temp = Files.createTempFile("", "");
+            Files.copy(is, temp, StandardCopyOption.REPLACE_EXISTING);
+            Stream<String> lines = Files.lines(temp);
+            list = lines.filter((line) -> !line.startsWith("Name"))
                     .collect(Collectors.toList());
-
+            lines.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
