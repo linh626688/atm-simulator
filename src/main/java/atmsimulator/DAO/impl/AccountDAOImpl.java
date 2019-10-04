@@ -3,9 +3,12 @@ package atmsimulator.DAO.impl;
 import atmsimulator.DAO.AccountDAO;
 import atmsimulator.model.Account;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,14 +19,16 @@ import static atmsimulator.MainApp.users;
 public class AccountDAOImpl implements AccountDAO {
     @Override
     public void importAccount() {
-        String fileName = "./src/main/resources/input_account.csv";
         List<String> list = new ArrayList<>();
-
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            list = stream
-                    .filter((line) -> !line.startsWith("Name"))
+        Path path = null;
+        try {
+            Path temp = Files.createTempFile("", "");
+            InputStream is = this.getClass().getResourceAsStream("/input_account.csv");
+            Files.copy(is, temp, StandardCopyOption.REPLACE_EXISTING);
+            Stream<String> lines = Files.lines(temp);
+            list = lines.filter((line) -> !line.startsWith("Name"))
                     .collect(Collectors.toList());
-
+            lines.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
