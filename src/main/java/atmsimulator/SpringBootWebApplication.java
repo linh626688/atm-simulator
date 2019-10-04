@@ -13,6 +13,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import java.io.InputStream;
+
 @EntityScan(
         basePackageClasses = {SpringBootWebApplication.class, Jsr310JpaConverters.class}
 )
@@ -40,9 +42,10 @@ public class SpringBootWebApplication extends SpringBootServletInitializer  impl
     @Override
     public void run(String... args) throws Exception {
 //        init account to DB
-//        accountRepository.save(Utils.importAccountFromCSV());
+        InputStream is = this.getClass().getResourceAsStream("/input_account.csv");
+        accountRepository.save(Utils.importAccountFromCSV(is));
 
 //        init transaction log to DB
-//        transactionRepository.save(Utils.getTransactionFromCSV());
+        transactionRepository.save(Utils.getTransactionFromCSV());
     }
 }
