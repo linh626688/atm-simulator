@@ -42,10 +42,10 @@ public class SpringBootWebApplication extends SpringBootServletInitializer  impl
     @Override
     public void run(String... args) throws Exception {
 //        init account to DB
-        InputStream is = this.getClass().getResourceAsStream("/input_account.csv");
-        accountRepository.save(Utils.importAccountFromCSV(is));
+//        InputStream is = this.getClass().getResourceAsStream("/input_account.csv");
+//        accountRepository.save(Utils.importAccountFromCSV(is));
 
 //        init transaction log to DB
-        transactionRepository.save(Utils.getTransactionFromCSV());
+//        transactionRepository.save(Utils.getTransactionFromCSV());
     }
 }
