@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static atmsimulator.Constant.LIST_TRANSACTION_SIZE;
+
 @Service
 public class TransactionServicesImpl implements TransactionServices {
 
@@ -16,9 +18,9 @@ public class TransactionServicesImpl implements TransactionServices {
 
     @Override
     public List<Transaction> latest10TransactionByAccount(String accountNumber) {
-        List<Transaction> transactionList = (List<Transaction>) transactionRepository.findTransactionByAccountNumber(accountNumber);
-        return transactionList.size() >= 10
-                ? transactionList.subList(transactionList.size() - 10, transactionList.size())
+        List<Transaction> transactionList = transactionRepository.findTransactionByAccountNumber(accountNumber);
+        return transactionList.size() >= LIST_TRANSACTION_SIZE
+                ? transactionList.subList(transactionList.size() - LIST_TRANSACTION_SIZE, transactionList.size())
                 : transactionList;
     }
 }

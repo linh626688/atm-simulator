@@ -4,5 +4,5 @@ import atmsimulator.model.Account;
 
 public interface UserServices {
 
-	public Account validateLogin(String accountNumber, String pin);
+	Account validateLogin(String accountNumber, String pin);
 }
