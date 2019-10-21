@@ -116,3 +116,4 @@ hs_err_pid*
 .idea/dataSources.xml
 .idea/compiler.xml
 .idea/artifacts/casestudy1_war_exploded.xml
+casestudy1.iml

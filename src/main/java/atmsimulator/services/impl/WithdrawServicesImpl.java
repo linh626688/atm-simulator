@@ -45,16 +45,10 @@ public class WithdrawServicesImpl implements WithdrawServices {
                 transaction.setRef(ref);
                 transaction.setTime(LocalDateTime.now());
                 transaction.setType(TRANSACTION_WITHDRAW);
-                try {
-                    transactionRepository.save(transaction);
-                    logger.info("update info account - account: " + account.getAccountNumber());
-
-                    accountRepository.save(account);
-                    logger.info("insert new transaction - ref: " + ref);
-
-                } catch (Exception ex) {
-                    logger.error(ex.getMessage());
-                }
+                transactionRepository.save(transaction);
+                logger.info("update info account - account: " + account.getAccountNumber());
+                accountRepository.save(account);
+                logger.info("insert new transaction - ref: " + ref);
                 return true;
             }
         }

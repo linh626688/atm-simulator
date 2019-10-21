@@ -19,7 +19,6 @@ import static atmsimulator.Constant.*;
 
 @Service
 @Transactional
-
 public class FundTransferServicesImpl implements FundTransferServices {
     Logger logger = LogManager.getLogger(FundTransferServicesImpl.class);
 
@@ -34,7 +33,7 @@ public class FundTransferServicesImpl implements FundTransferServices {
         Account currentAccount = accountRepository.findAccountByAccountNumberAndPin(accountNumber, pin);
         Optional<Account> destinationAccount = accountRepository.findAccountByAccountNumber(destination);
 
-        if(accountNumber.equals(destination)) {
+        if (accountNumber.equals(destination)) {
             return "Destination is invalid";
         }
         if (currentAccount == null || !destinationAccount.isPresent()) {
@@ -49,22 +48,18 @@ public class FundTransferServicesImpl implements FundTransferServices {
 
         currentAccount.setBalance(currentAccount.getBalance() - amount);
         destinationAccount.get().setBalance(destinationAccount.get().getBalance() + amount);
-        try {
-            accountRepository.save(Arrays.asList(currentAccount, destinationAccount.get()));
-            logger.info("update info account - currentAccount: " + currentAccount.getAccountNumber());
-            logger.info("update info account - destinationAccount: " + destinationAccount.get().getAccountNumber());
-            Transaction transaction = new Transaction();
-            transaction.setAccountNumber(accountNumber);
-            transaction.setAmount(String.valueOf(amount));
-            transaction.setRef(ref);
-            transaction.setTime(LocalDateTime.now());
-            transaction.setType(TRANSACTION_FUND_TRANSFER);
-            transactionRepository.save(transaction);
-            logger.info("insert new transaction - ref: " + ref);
+        accountRepository.save(Arrays.asList(currentAccount, destinationAccount.get()));
+        logger.info("update info account - currentAccount: " + currentAccount.getAccountNumber());
+        logger.info("update info account - destinationAccount: " + destinationAccount.get().getAccountNumber());
+        Transaction transaction = new Transaction();
+        transaction.setAccountNumber(accountNumber);
+        transaction.setAmount(String.valueOf(amount));
+        transaction.setRef(ref);
+        transaction.setTime(LocalDateTime.now());
+        transaction.setType(TRANSACTION_FUND_TRANSFER);
+        transactionRepository.save(transaction);
+        logger.info("insert new transaction - ref: " + ref);
 
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
         return SUCCESS;
     }
 }
