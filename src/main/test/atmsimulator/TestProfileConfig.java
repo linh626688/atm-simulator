@@ -16,36 +16,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"atmsimulator.repository"},
-        excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {,})})
+@EnableJpaRepositories(basePackages = {"atmsimulator.repository"})
 @EnableTransactionManagement
 public class TestProfileConfig {
-    @Value("classpath:data.sql")
-    private Resource dataScript;
-
     @Bean
     public DataSource dataSource() {
-        System.out.println("dataScript: " + dataScript);
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setUrl("jdbc:h2:~/testdb;DB_CLOSE_ON_EXIT=FALSE");
         dataSource.setUsername("sa");
         dataSource.setPassword("sa");
         return dataSource;
-    }
-
-
-    @Bean
-    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
-        final DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource);
-        initializer.setDatabasePopulator(databasePopulator());
-        return initializer;
-    }
-
-    private DatabasePopulator databasePopulator() {
-        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(dataScript);
-        return populator;
     }
 }

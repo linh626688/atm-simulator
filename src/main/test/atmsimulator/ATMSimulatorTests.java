@@ -21,7 +21,7 @@ import java.util.List;
 import static atmsimulator.Constant.SUCCESS;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SpringBootWebApplication.class, TestProfileJPAConfig.class})
+@SpringBootTest(classes = {SpringBootWebApplication.class, TestProfileConfig.class})
 public class ATMSimulatorTests {
     @Autowired
     private UserServices userServices;
