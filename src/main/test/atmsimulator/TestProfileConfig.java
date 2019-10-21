@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(basePackages = {"atmsimulator.repository"},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {,})})
 @EnableTransactionManagement
-public class TestProfileJPAConfig {
+public class TestProfileConfig {
     @Value("classpath:data.sql")
     private Resource dataScript;
 
