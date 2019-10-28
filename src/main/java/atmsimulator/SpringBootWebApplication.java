@@ -46,6 +46,6 @@ public class SpringBootWebApplication extends SpringBootServletInitializer imple
 //        accountRepository.save(Utils.importAccountFromCSV(is));
 
 //        init transaction log to DB
-//        transactionRepository.save(Utils.getTransactionFromCSV());
+        transactionRepository.save(Utils.getTransactionFromCSV());
     }
 }

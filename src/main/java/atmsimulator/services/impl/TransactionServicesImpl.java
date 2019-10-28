@@ -20,7 +20,7 @@ public class TransactionServicesImpl implements TransactionServices {
 
     @Override
     public List<Transaction> latest10TransactionByAccount(String accountNumber) {
-        List<Transaction> transactionList = (List<Transaction>) transactionRepository.findTransactionByAccountNumber(accountNumber);
+        List<Transaction> transactionList = transactionRepository.findTransactionByAccountNumber(accountNumber);
         return transactionList.size() >= 10
                 ? transactionList.subList(transactionList.size() - 10, transactionList.size())
                 : transactionList;

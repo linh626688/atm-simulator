@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface UserServices {
 
-	public Account validateLogin(String accountNumber, String pin);
+    Account validateLogin(String accountNumber, String pin);
 
-	public Optional<Account> getAccountByAccountNumber(String accountNumber);
+    Optional<Account> getAccountByAccountNumber(String accountNumber);
 }
