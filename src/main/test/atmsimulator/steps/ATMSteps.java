@@ -1,25 +1,13 @@
 package atmsimulator.steps;
 
-import atmsimulator.config.MockSecurityContext;
-import atmsimulator.model.Account;
-import atmsimulator.model.dto.WithdrawDTO;
-import atmsimulator.repository.AccountRepository;
-import atmsimulator.services.UserServices;
 import cucumber.api.java.Before;
 import cucumber.api.java8.En;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,14 +17,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.Assert.*;
 
@@ -45,13 +29,6 @@ public class ATMSteps implements En {
 
     @Autowired
     private WebApplicationContext wac;
-
-    @Autowired
-    private UserServices userServices;
-
-    @Autowired
-    @Mock
-    private AccountRepository accountRepository;
 
     private MockMvc mockMvc;
 
