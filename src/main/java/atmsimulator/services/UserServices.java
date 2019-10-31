@@ -9,4 +9,6 @@ public interface UserServices {
     Account validateLogin(String accountNumber, String pin);
 
     Optional<Account> getAccountByAccountNumber(String accountNumber);
+
+    Account createNewAccount(Account account);
 }

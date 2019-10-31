@@ -41,7 +41,7 @@ public class ATMSimulatorTests {
     @Before
     public void prepareDataForTest() {
         accountRepository.deleteAll();
-        initData();
+        initData(accountRepository);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ATMSimulatorTests {
         Assert.assertEquals(result.get(0).getAccountNumber(), "112233");
     }
 
-    public void initData() {
+    public static void initData(AccountRepository accountRepository) {
         Account newAccount = new Account();
         newAccount.setName("Wayne Rooney");
         newAccount.setAccountNumber("112233");

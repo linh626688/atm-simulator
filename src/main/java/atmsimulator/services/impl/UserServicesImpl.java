@@ -28,4 +28,9 @@ public class UserServicesImpl implements UserServices {
     public Optional<Account> getAccountByAccountNumber(String accountNumber) {
         return accountRepository.findAccountByAccountNumber(accountNumber);
     }
+
+    @Override
+    public Account createNewAccount(Account account) {
+        return accountRepository.save(account);
+    }
 }

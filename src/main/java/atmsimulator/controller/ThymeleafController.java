@@ -55,10 +55,17 @@ public class ThymeleafController {
     }
 
     @GetMapping("/signin")
-    public String login(Model model) {
+    public String loginPage(Model model) {
         Account account = new Account();
         model.addAttribute("account", account);
         return "signin";
+    }
+
+    @PostMapping("/signin")
+    public String login(Model model, @RequestParam("username") String accountNumber, @RequestParam("password") String pin) {
+        Account account = userServices.validateLogin(accountNumber, pin);
+        model.addAttribute("account", account);
+        return "user";
     }
 
     @GetMapping("/user")
